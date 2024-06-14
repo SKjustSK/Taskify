@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --side-bar-color: #A2435C;
+    --nav-bar-text-color: #F6F6F4;
+    --main-content-color: #F6F6F4;
+    --hover-color: #b44c67;
+    --darker-hover-color: #b14b66;
+    --footer-color: #10173b;
+    --side-bar-padding: 10px;
+    --font: 'Outfit';
+    --nav-bar-text-padding: 0.4em;
+}

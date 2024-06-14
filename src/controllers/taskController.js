@@ -3,17 +3,9 @@ import Task from '../modules/task.js';
 import { getCAT, updateCAT } from '../modules/localStorage.js';
 
 const CATEGORIES = "categories";
+const DEFAULT = "General";
 
 const TaskController = (() => {
-
-    if (localStorage.getItem(CATEGORIES) === null)
-    {
-        let categories = new Object();
-        let general = new Category();
-        categories["general"] = general;
-        updateCAT(categories);
-    }
-
     const insertTask = (categoryName, task) => {
         let categories = getCAT();
         let category = categories[categoryName];
