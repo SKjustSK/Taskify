@@ -3,16 +3,22 @@
 :root {
     --font: 'Outfit';
 
+    --main-content-primary: #5dbca3;
+    --grey-500: #6b7280;
     --side-bar-color: #A2435C;
     --main-content-color: #F6F6F4;
     --hover-color: #b44c67;
     --darker-hover-color: #b14b66;
     --footer-color: #10173b;
+    --delete-color: #F44336;
 
     --nav-bar-text-color: #F6F6F4;
-    --brand-name-color: var(--main-content-color);
+    --brand-name-color: var(--main-contenst-color);
     --category-title-color: var(--main-content-color);
 
     --side-bar-padding: 10px;
     --nav-bar-text-padding: 0.4em;
+    --task-card-padding: 10px;
+
+    --transition-time: 0.2s;
 }

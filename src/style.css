@@ -44,13 +44,6 @@ body {
 
 .common-use-item,
 .category-item {
-    /*to override the button styles*/
-    background: none;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    text-align: start;
-    /**/
     color: var(--nav-bar-text-color);
     padding: var(--nav-bar-text-padding);
     font-size: 1.1em;
@@ -84,13 +77,6 @@ body {
 }
 
 .add-category {
-    /*to override the button styles*/
-    background: none;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    text-align: start;
-    /**/
     display: flex;
     align-items: center;
     color: var(--nav-bar-text-color);
@@ -99,7 +85,7 @@ body {
     padding-bottom: 0.195em;
     cursor: pointer;
     border-radius: 5px;
-    transition: 0.2s;
+    transition: var(--transition-time);
 }
 
 .add-category:hover {
@@ -128,9 +114,114 @@ body {
 
 
 /* Main content */
-.main-content {
+.main-content-container {
+    display: flex;
     padding: var(--side-bar-padding);
     background-color: var(--main-content-color);
 }
 
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 3% 5%;
+}
+
+/* Title */
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: var(--task-card-padding);
+    /* background-color: aquamarine; */
+}
+
+.title-container .category-title {
+    font-size: 2.7em;
+}
+
+.title-container .delete-category {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: var(--task-card-padding);
+    font-size: 0.8em;
+    border-radius: 5px;
+}
+
+.title-container .delete-category:hover {
+    background-color: #fee2e2;
+    color: #d6352a;
+    .icon-container {
+        /*same color as the above color, for delete icon svg*/
+        filter: invert(32%) sepia(75%) saturate(1355%) hue-rotate(335deg) brightness(89%) contrast(111%);
+    }
+}
+
+.title-container .delete-category .icon-container {
+    background-image: url(./images/delete-icon.svg);
+    background-size: contain;
+    height: 1em;
+    width: 1em;
+
+    /*same color as color of delete category tex*/
+    filter: invert(46%) sepia(26%) saturate(7458%) hue-rotate(336deg) brightness(92%) contrast(108%);
+}
+
+.title-container .delete-category .delete-text {
+    color: var(--delete-color);
+}
 /**/
+
+/* Add task */
+.add-task-container {
+    display: flex;
+    align-self: start;
+    width: 10%;
+    gap: 3px;
+    padding: calc(0.5*var(--task-card-padding)) var(--task-card-padding);
+}
+
+.add-task-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1.3em;
+    aspect-ratio: 1 / 1;
+    border-radius: 100px;
+    color: var(--grey-500);
+    padding: calc(-1*1em);
+    padding-left:  0.145em; 
+    padding-bottom:  0.145em; 
+}
+
+.add-task-text {
+    color: var(--grey-500);
+}
+
+.add-task-container:hover {
+    .add-task-text {
+        color: var(--main-content-primary);
+    }
+    .add-task-icon {
+        background-color: var(--main-content-primary);
+        color: var(--main-content-color);
+    }
+}
+/**/
+
+/* Tasks */
+/**/
+
+/**/
+
+button {
+    /*to override the button styles*/
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: start;
+    cursor: pointer;
+    /**/
+}
