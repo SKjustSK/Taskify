@@ -10,7 +10,8 @@
     --footer-color: #10173b;
 
     --nav-bar-text-color: #F6F6F4;
-    --brand-name-color: #58debb;
+    --brand-name-color: var(--main-content-color);
+    --category-title-color: var(--main-content-color);
 
     --side-bar-padding: 10px;
     --nav-bar-text-padding: 0.4em;

@@ -79,6 +79,8 @@ body {
     font-weight: 600;
     padding: var(--nav-bar-text-padding);
     padding-left: calc(-1*var(--nav-bar-text-padding));
+
+    color: var(--category-title-color);
 }
 
 .add-category {
@@ -96,12 +98,13 @@ body {
     aspect-ratio: 1 / 1;
     padding-bottom: 0.195em;
     cursor: pointer;
-    border-radius: 100px;
+    border-radius: 5px;
+    transition: 0.2s;
 }
 
 .add-category:hover {
-    background-color: var(--nav-bar-text-color);
-    color: var(--side-bar-color);
+    background-color: var(--darker-hover-color);
+    transform: scale(1.2);
 }
 /**/
 
