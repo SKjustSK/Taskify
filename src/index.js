@@ -12,3 +12,4 @@ let task1 = new Task("milk cows");
 let task2 = new Task("rescue cats");
 
 console.log(getCAT());
+

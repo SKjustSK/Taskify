@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --side-bar-color: #A2435C;
+    --nav-bar-text-color: #F6F6F4;
+    --main-content-color: #F6F6F4;
+    --hover-color: #b44c67;
+    --darker-hover-color: #b14b66;
+    --footer-color: #10173b;
+    --side-bar-padding: 10px;
+    --font: 'Outfit';
+    --nav-bar-text-padding: 0.4em;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 20% 1fr;
+    grid-template-rows: 100vh 5%;
+
+    font-family: var(--font), Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.footer {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+
+    font-size: 0.9em;
+    background-color: var(--footer-color);
+    color: var(--nav-bar-text-color);
+    gap: 0.19em;
+    a {
+        color: var(--nav-bar-text-color);
+    }
+}
+
+
+/* Side bar + Nav bar*/
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    padding: var(--side-bar-padding);
+    padding-top: calc(var(--side-bar-padding)*2);
+    background-color: var(--side-bar-color);
+    gap: 7%;
+    color: var(--nav-bar-text-color);
+}
+
+.side-bar .brand-name {
+    display: flex;
+    align-items: center;
+    font-size: 4em;
+    height: 8%;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.common-use-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.common-use-item,
+.category-item {
+    /*to override the button styles*/
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: start;
+    /**/
+    color: var(--nav-bar-text-color);
+    padding: var(--nav-bar-text-padding);
+    font-size: 1.1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.common-use-item:hover,
+.category-item:hover {
+    background-color: var(--hover-color);
+}
+
+.categories-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.categories-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.categories-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: var(--nav-bar-text-padding);
+    padding-left: calc(-1*var(--nav-bar-text-padding));
+}
+
+.add-category {
+    /*to override the button styles*/
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    text-align: start;
+    /**/
+    display: flex;
+    align-items: center;
+    color: var(--nav-bar-text-color);
+    font-size: 1.8em;
+    aspect-ratio: 1 / 1;
+    padding-bottom: 0.195em;
+    cursor: pointer;
+    border-radius: 100px;
+}
+
+.add-category:hover {
+    background-color: var(--nav-bar-text-color);
+    color: var(--side-bar-color);
+}
+/**/
+
+
+/* Main content */
+.main-content {
+    padding: var(--side-bar-padding);
+    background-color: var(--main-content-color);
+}
+
+/**/
