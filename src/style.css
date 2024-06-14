@@ -23,11 +23,12 @@ body {
     color: var(--nav-bar-text-color);
 }
 
-.side-bar .brand-name {
+.brand-name {
     display: flex;
     align-items: center;
     font-size: 4em;
     height: 8%;
+    color: var(--brand-name-color);
 }
 
 .nav-bar {
