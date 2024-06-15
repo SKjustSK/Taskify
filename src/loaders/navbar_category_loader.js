@@ -4,6 +4,10 @@ import {getCAT} from '../modules/localStorage.js';
 
 function create_categoryItem (categoryName)
 {
+    // <button class="category-item general">
+    //     # General
+    // </button>
+
     let button = document.createElement('button');
     button.classList.add("category-item", categoryName);
     button.innerText = `# ${categoryName}`;
@@ -13,8 +17,7 @@ function create_categoryItem (categoryName)
 function load_navBar_categories () {
     
     let categoriesWrapper = document.querySelector('.categories-wrapper');
-
-    // Actual Categories
+    
     let categories = getCAT();
     for (let key in categories)
     {

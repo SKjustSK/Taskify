@@ -294,9 +294,21 @@ body {
     filter: invert(46%) sepia(26%) saturate(7458%) hue-rotate(336deg) brightness(92%) contrast(108%);
 }
 
-.task-category-indicator {
+.task-info-two {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
     color: var(--grey-600);
-    align-self: end;
+    padding-left: calc(4.7*var(--task-card-padding));
+}
+
+.task-info-two .deadline {
+    font-size: 0.85em;
+}
+
+.strike {
+    color: var(--grey-600);
+    text-decoration: line-through;
 }
 /**/
 
