@@ -1,6 +1,6 @@
 // Loads the categories displayed under "My Categories";
 
-import {getCAT} from '../../modules/localStorage.js';
+import {getCAT} from '../modules/localStorage.js';
 
 function create_categoryItem (categoryName)
 {

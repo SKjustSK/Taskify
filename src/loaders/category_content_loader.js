@@ -1,0 +1,1 @@
+// Will load the content for categories like general
