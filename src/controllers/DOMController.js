@@ -24,8 +24,10 @@ function sortDatesAsc (a, b) {
 
 const DOMController = (() => {
 
+    // Imported //
     // loads all category buttons under the 'My Category' section
     const load_navBar_categories = () => {
+        clear_navbar_categories();
         const categoriesWrapper = document.querySelector('.categories-wrapper');
         
         let categories = getCAT();
@@ -38,44 +40,95 @@ const DOMController = (() => {
 
     // loads title and tasks of a given category
     const load_mainContent_category = (categoryName) => {
+        clear_mainContent();
         load_mainContent_category_title(categoryName);
         load_category_tasks(categoryName);
     };
 
-    // loads title "All" and all tasks
-    const load_mainContent_all = () => {
-        // title
-        const titleContainer = document.querySelector('.title-container');
-        let all_title = DOM_constructors.mainContent_title("All");
-        titleContainer.appendChild(all_title);
-        
-        // tasks
-        const tasksContainer = document.querySelector('.tasks-container');
-        let all_tasks = [];
-        for (let key in categories)
-        {
-            let category = categories[key];
-            for (let task of category.tasks)
-            {
-                all_tasks.push(
-                    {
-                        "category": category.title,
-                        "task": task,
-                    }
+    // To create more commonUse items like All, Today, This Week, etc, use the below format
+    const load_mainContent_commonUse = (() => {
+
+        const all = () => {
+            const taskFilter_all = (task) => {
+                return task;
+            };
+            load_commonUse_template("All", taskFilter_all);
+        };
+    
+        const today = () => {
+            const taskFilter_today = (task) => {
+                let today = new Date();
+                
+                console.log(`today: ${today}`);
+                
+                console.log(task.task.deadline);
+
+                return (
+                    task.task.deadline.getDay() === today.getDay() &&
+                    task.task.deadline.getMonth() === today.getMonth() &&
+                    task.task.deadline.getFullYear() === today.getFullYear()
                 );
+            };
+            load_commonUse_template("Today", taskFilter_today);
+        }
+    
+        const load_commonUse_template = (commonUseName, taskFilter) => {
+            clear_mainContent();
+            // title
+            const titleContainer = document.querySelector('.title-container');
+            let title = DOM_constructors.mainContent_title(commonUseName);
+            titleContainer.appendChild(title);
+            // Tasks
+            const tasksContainer = document.querySelector('.tasks-container');
+            let all_tasks = [];
+            for (let key in categories)
+            {
+                let category = categories[key];
+                for (let task of category.tasks)
+                {
+                    all_tasks.push(
+                        {
+                            "category": category.title,
+                            "task": task,
+                        }
+                    );
+                }
+            }
+            
+            let required_tasks = all_tasks.filter(taskFilter);
+            // sorting tasks in ascending order in terms of date
+            required_tasks.sort((a, b) => {
+                return sortDatesAsc(a.task, b.task);
+            });
+            // appending them to DOM
+            for (let task of required_tasks)
+            {
+                let taskItem = DOM_constructors.taskItem(task.category, task.task);
+                tasksContainer.appendChild(taskItem.cloneNode(true));
             }
         }
-        // sorting dates in ascending order
-        all_tasks.sort((a, b) => {
-            return sortDatesAsc(a.task, b.task);
-        });
 
-        for (let task of all_tasks)
+        return {
+            all,
+            today,
+        };
+    })();
+
+    const clear_mainContent = () => {
+        let titleContainer = document.querySelector('.title-container');
+        let tasksContainer = document.querySelector('.tasks-container');
+        titleContainer.innerHTML = "";
+        tasksContainer.innerHTML = "";
+    }
+
+    // Not imported //
+    const clear_navbar_categories = () => {
+        let categories = document.querySelectorAll('.category-item');
+        for (let category of categories)
         {
-            let taskItem = DOM_constructors.taskItem(task.category, task.task);
-            tasksContainer.appendChild(taskItem.cloneNode(true));
+            category.remove();
         }
-    };
+    }
 
     const load_mainContent_category_title = (categoryName) => {
         const titleContainer = document.querySelector('.title-container');
@@ -105,11 +158,13 @@ const DOMController = (() => {
         }
     }
 
+    
     return {
         load_navBar_categories,
         load_mainContent_category,
-        load_mainContent_all,
-    }
+        load_mainContent_commonUse,
+        clear_mainContent,
+    };
 })();
 
 export default DOMController;

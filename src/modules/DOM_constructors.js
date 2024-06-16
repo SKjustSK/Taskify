@@ -5,7 +5,7 @@ const DOM_constructors = (() => {
 
     const navbar_categoryItem = (categoryName) => {
             // <button class="category-item general">
-            //     # General
+            //     # Fitness
             // </button>
 
             let button = document.createElement('button');
