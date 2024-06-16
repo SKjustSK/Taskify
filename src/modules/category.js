@@ -1,8 +1,9 @@
 import Task from './task.js';
 
 class Category {
-    constructor ()
+    constructor (categoryName)
     {
+        this.title = categoryName;
         this.tasks = [];
     }
 

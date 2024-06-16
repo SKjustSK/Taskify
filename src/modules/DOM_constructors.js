@@ -1,6 +1,5 @@
 // Contains all elements that are to be created
 import {getCAT} from '../modules/localStorage.js';
-const CATEGORIES = "General";
 
 const DOM_constructors = (() => {
 
@@ -15,7 +14,7 @@ const DOM_constructors = (() => {
             return button;
     };   
 
-    const mainContent_category_title = (categoryName) => {
+    const mainContent_title = (categoryName) => {
         // <div class="category-title">
         //     General
         // </div>
@@ -28,24 +27,20 @@ const DOM_constructors = (() => {
     };
 
     const deleteCategory_button = (categoryName) => {
-        if (categoryName !== CATEGORIES)
-        {
-            let deleteButton = document.createElement('button');
-            deleteButton.classList.add('delete-category');
-    
-            let iconContainer = document.createElement('div');
-            iconContainer.classList.add('icon-container');
-    
-            let deleteText = document.createElement('div');
-            deleteText.classList.add('delete-text');
-            deleteText.innerText = `Delete ${categoryName}`;
-    
-            deleteButton.appendChild(iconContainer);
-            deleteButton.appendChild(deleteText);
-            
-            return deleteButton;
-        }
-        return;
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-category');
+
+        let iconContainer = document.createElement('div');
+        iconContainer.classList.add('icon-container');
+
+        let deleteText = document.createElement('div');
+        deleteText.classList.add('delete-text');
+        deleteText.innerText = `Delete ${categoryName}`;
+
+        deleteButton.appendChild(iconContainer);
+        deleteButton.appendChild(deleteText);
+        
+        return deleteButton;
     };
 
     const taskItem = (categoryName, task) => {
@@ -116,7 +111,7 @@ const DOM_constructors = (() => {
 
     return {
         navbar_categoryItem,
-        mainContent_category_title,
+        mainContent_title,
         deleteCategory_button,
         taskItem,
     }

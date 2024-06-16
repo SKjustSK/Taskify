@@ -16,7 +16,7 @@ function getCAT()
     for (let key in categories)
     {
         let categoryData = categories[key];
-        let category = new Category();
+        let category = new Category(categoryData.title);
         category.tasks = categoryData.tasks.map(task => new Task(task.title, task.desc, new Date(task.deadline), task.priority, task.completion));
         categories[key] = category;
     }

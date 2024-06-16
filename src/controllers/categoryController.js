@@ -12,7 +12,7 @@ const CategoryController = (() => {
         if (localStorage.getItem(CATEGORIES) === null)
         {
             let categories = {};
-            let general = new Category();
+            let general = new Category(DEFAULT);
             categories[DEFAULT] = general;
             updateCAT(categories);
         }
@@ -22,7 +22,7 @@ const CategoryController = (() => {
         let categories = getCAT();
         if (categories[categoryName] === undefined)
         {
-            categories[categoryName] = new Category();
+            categories[categoryName] = new Category(categoryName);
             updateCAT(categories);
         }
         else
