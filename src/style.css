@@ -181,6 +181,7 @@ body {
     width: 10%;
     gap: 3px;
     padding: calc(0.5*var(--task-card-padding)) var(--task-card-padding);
+    cursor: pointer;
 }
 
 .add-task-icon {

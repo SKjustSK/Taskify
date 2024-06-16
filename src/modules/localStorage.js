@@ -17,7 +17,7 @@ function getCAT()
     {
         let categoryData = categories[key];
         let category = new Category();
-        category.tasks = categoryData.tasks.map(task => new Task(task.title, task.description, new Date(task.deadline), task.priority, task.completion));
+        category.tasks = categoryData.tasks.map(task => new Task(task.title, task.desc, new Date(task.deadline), task.priority, task.completion));
         categories[key] = category;
     }
     return categories;

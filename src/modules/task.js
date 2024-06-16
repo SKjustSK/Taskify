@@ -4,16 +4,16 @@ class Task {
     {
         this.title = title;
         this.desc = desc;
-        this.deadline = deadline;
-        this.priority = priority;
-        this.completion = completion;
+        this.deadline = deadline; // Date object
+        this.priority = priority; 
+        this.completion = completion; // boolean
     }
 
     isEqual(otherTask)
     {
         return this.title === otherTask.title &&
                this.desc === otherTask.desc &&
-               this.deadline === otherTask.deadline &&
+               this.deadline.getTime() == otherTask.deadline.getTime() &&
                this.priority === otherTask.priority &&
                this.completion === otherTask.completion;
     }

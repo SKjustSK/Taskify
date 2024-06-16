@@ -6,6 +6,18 @@ const CATEGORIES = "categories";
 const DEFAULT = "General";
 
 const CategoryController = (() => {
+
+    // Initializes a "categories" object with a default "General" category, if no such object is present.
+    const initialize_default_category = () => {
+        if (localStorage.getItem(CATEGORIES) === null)
+        {
+            let categories = {};
+            let general = new Category();
+            categories[DEFAULT] = general;
+            updateCAT(categories);
+        }
+    }
+
     const insertCategory = (categoryName) => {
         let categories = getCAT();
         if (categories[categoryName] === undefined)
@@ -33,6 +45,7 @@ const CategoryController = (() => {
     }
 
     return {
+        initialize_default_category,
         insertCategory,
         deleteCategory,
     }
