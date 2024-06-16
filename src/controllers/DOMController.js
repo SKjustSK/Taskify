@@ -1,3 +1,4 @@
+import { isSameWeek , isSameDay, isAfter , isBefore } from "date-fns";
 import { getCAT } from "../modules/localStorage";
 import DOM_constructors from "../modules/DOM_constructors";
 
@@ -50,7 +51,11 @@ const DOMController = (() => {
 
         const all = () => {
             const taskFilter_all = (task) => {
-                return task;
+                let today = new Date();
+                return (
+                    isAfter(task.task.deadline, today) || 
+                    isSameDay(task.task.deadline, today)
+                );
             };
             load_commonUse_template("All", taskFilter_all);
         };
@@ -58,20 +63,38 @@ const DOMController = (() => {
         const today = () => {
             const taskFilter_today = (task) => {
                 let today = new Date();
-                
-                console.log(`today: ${today}`);
-                
-                console.log(task.task.deadline);
-
                 return (
-                    task.task.deadline.getDay() === today.getDay() &&
-                    task.task.deadline.getMonth() === today.getMonth() &&
-                    task.task.deadline.getFullYear() === today.getFullYear()
+                    isSameDay(today, task.task.deadline)
                 );
             };
             load_commonUse_template("Today", taskFilter_today);
         }
-    
+
+        const thisWeek = () => {
+            const taskFilter_thisWeek = (task) => {
+                let today = new Date();
+                return (
+                    isSameWeek(today, task.task.deadline) && 
+                        (
+                            isAfter(task.task.deadline, today) || 
+                            isSameDay(task.task.deadline, today)
+                        )
+                );
+            }
+            load_commonUse_template("This Week", taskFilter_thisWeek);
+        };
+
+        const pastDue = () => {
+            const taskFilter_pastDue = (task) => {
+                let today = new Date();
+                return (
+                    isBefore(task.task.deadline, today) && 
+                    !isSameDay(task.task.deadline, today)
+                );
+            }
+            load_commonUse_template("Past Due", taskFilter_pastDue);
+        }
+        
         const load_commonUse_template = (commonUseName, taskFilter) => {
             clear_mainContent();
             // title
@@ -111,6 +134,8 @@ const DOMController = (() => {
         return {
             all,
             today,
+            thisWeek,
+            pastDue,
         };
     })();
 
@@ -148,10 +173,19 @@ const DOMController = (() => {
         const category = categories[categoryName];
         let tasks = category.tasks;
         
-        // sorting dates in ascending order
-        tasks.sort(sortDatesAsc);
-
+        // remove old tasks
+        let required_tasks = [];
+        let today = new Date();
         for (let task of tasks)
+        {
+            if (isAfter(task.deadline, today) || isSameDay(task.deadline, today))
+            {
+                required_tasks.push(task);
+            }
+        }
+        required_tasks.sort(sortDatesAsc);
+
+        for (let task of required_tasks)
         {
             let taskItem = DOM_constructors.taskItem(categoryName, task);
             tasksContainer.appendChild(taskItem.cloneNode(true));

@@ -1,4 +1,5 @@
 // Contains all elements that are to be created
+import { format } from 'date-fns';
 import {getCAT} from '../modules/localStorage.js';
 
 const DOM_constructors = (() => {
@@ -95,7 +96,7 @@ const DOM_constructors = (() => {
 
         let deadline = document.createElement('div');
         deadline.classList.add('deadline');
-        deadline.innerText = `${task.deadline.getDate()}-${task.deadline.getMonth()}-${task.deadline.getFullYear()}`;
+        deadline.innerText = format(task.deadline, "d MMM, EEEE, yyyy");
         
         let taskCategory = document.createElement('div');
         taskCategory.classList.add("task-category-indicator");
