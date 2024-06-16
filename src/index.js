@@ -1,5 +1,3 @@
-
-
 import './style.css';
 
 import Task from './modules/task.js';
@@ -17,8 +15,8 @@ addDummyTasks();
 
 DOMController.load_navBar_categories();
 
-DOMController.load_mainContent_category("Fitness");
-// DOMController.load_mainContent_commonUse.all();
+// DOMController.load_mainContent_category("Fitness");
+DOMController.load_mainContent_commonUse.all();
 
 
 console.log(getCAT());

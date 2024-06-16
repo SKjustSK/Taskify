@@ -3,7 +3,6 @@ import { getCAT } from "../modules/localStorage";
 import DOM_constructors from "../modules/DOM_constructors";
 
 const DEFAULT = "General";
-const categories = getCAT();
 
 function priority_to_num (priority)
 {
@@ -31,7 +30,7 @@ const DOMController = (() => {
         clear_navbar_categories();
         const categoriesWrapper = document.querySelector('.categories-wrapper');
         
-        let categories = getCAT();
+        const categories = getCAT();
         for (let key in categories)
         {
             let button = DOM_constructors.navbar_categoryItem(key); 
@@ -102,6 +101,7 @@ const DOMController = (() => {
             let title = DOM_constructors.mainContent_title(commonUseName);
             titleContainer.appendChild(title);
             // Tasks
+            const categories = getCAT();
             const tasksContainer = document.querySelector('.tasks-container');
             let all_tasks = [];
             for (let key in categories)
@@ -170,6 +170,7 @@ const DOMController = (() => {
     const load_category_tasks = (categoryName) => {
         const tasksContainer = document.querySelector('.tasks-container');
 
+        const categories = getCAT();
         const category = categories[categoryName];
         let tasks = category.tasks;
         
