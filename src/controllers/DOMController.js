@@ -204,7 +204,7 @@ const DOMController = (() => {
         for (let task of required_tasks)
         {
             let taskItem = DOM_constructors.taskItem(categoryName, task);
-            tasksContainer.appendChild(taskItem.cloneNode(true));
+            tasksContainer.appendChild(taskItem);
         }
     }
 

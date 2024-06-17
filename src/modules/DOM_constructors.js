@@ -16,6 +16,9 @@ const DOM_constructors = (() => {
             let button = document.createElement('button');
             button.classList.add("category-item", categoryName);
             button.innerText = `# ${categoryName}`;
+            button.addEventListener('click', () => {
+                DOMController.load_mainContent_category(categoryName);
+            });
             return button;
     };   
 
