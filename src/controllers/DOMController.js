@@ -40,6 +40,12 @@ const DOMController = (() => {
 
     // loads title and tasks of a given category
     const load_mainContent_category = (categoryName) => {
+        let categories = getCAT();
+        if (categories[categoryName] === undefined)
+        {
+            console.log(`Category ${categoryName} does not exist.`);
+            return;
+        }
         clear_mainContent();
         load_mainContent_category_title(categoryName);
         load_category_tasks(categoryName);
@@ -76,7 +82,7 @@ const DOMController = (() => {
                     isSameWeek(today, task.task.deadline) && 
                         (
                             isAfter(task.task.deadline, today) || 
-                            isSameDay(task.task.deadline, today)
+                            isSameDay(task.task.deadline, today) 
                         )
                 );
             }
@@ -88,10 +94,18 @@ const DOMController = (() => {
                 let today = new Date();
                 return (
                     isBefore(task.task.deadline, today) && 
-                    !isSameDay(task.task.deadline, today)
+                    !isSameDay(task.task.deadline, today) &&
+                    task.task.completion == false
                 );
             }
             load_commonUse_template("Past Due", taskFilter_pastDue);
+        }
+
+        const completed = () => {
+            const taskFilter_completed = (task) => {
+                return task.task.completion == true;
+            }
+            load_commonUse_template("Completed", taskFilter_completed);
         }
         
         const load_commonUse_template = (commonUseName, taskFilter) => {
@@ -127,7 +141,7 @@ const DOMController = (() => {
             for (let task of required_tasks)
             {
                 let taskItem = DOM_constructors.taskItem(task.category, task.task);
-                tasksContainer.appendChild(taskItem.cloneNode(true));
+                tasksContainer.appendChild(taskItem);
             }
         }
 
@@ -136,6 +150,7 @@ const DOMController = (() => {
             today,
             thisWeek,
             pastDue,
+            completed,
         };
     })();
 
@@ -144,7 +159,7 @@ const DOMController = (() => {
         let tasksContainer = document.querySelector('.tasks-container');
         titleContainer.innerHTML = "";
         tasksContainer.innerHTML = "";
-    }
+    }   
 
     // Not imported //
     const clear_navbar_categories = () => {

@@ -34,9 +34,40 @@ const TaskController = (() => {
         }
     };
 
+    const markComplete = (categoryName, task) => {
+        let categories = getCAT();
+        let category = categories[categoryName];
+        if (category !== undefined)
+        {
+            let actualTask = category.getTask(task);
+            actualTask.markComplete();
+            updateCAT(categories);
+        }
+        else
+        {
+            console.log(`Category '${categoryName}' does not exist.`)
+        }
+    };
+    const markIncomplete = (categoryName, task) => {
+        let categories = getCAT();
+        let category = categories[categoryName];
+        if (category !== undefined)
+        {
+            let actualTask = category.getTask(task);
+            actualTask.markIncomplete();
+            updateCAT(categories);
+        }
+        else
+        {
+            console.log(`Category '${categoryName}' does not exist.`)
+        }
+    };
+
     return {
         insertTask,
         deleteTask,
+        markComplete,
+        markIncomplete,
     };
 })();
 

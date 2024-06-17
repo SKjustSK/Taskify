@@ -1,5 +1,9 @@
 // Contains all elements that are to be created
 import { format } from 'date-fns';
+import CategoryController from '../controllers/categoryController.js';
+import TaskController from '../controllers/taskController.js';
+import DOMController from '../controllers/DOMController.js';
+
 import {getCAT} from '../modules/localStorage.js';
 
 const DOM_constructors = (() => {
@@ -38,6 +42,12 @@ const DOM_constructors = (() => {
         deleteText.classList.add('delete-text');
         deleteText.innerText = `Delete ${categoryName}`;
 
+        deleteButton.addEventListener('click', () => {
+            CategoryController.deleteCategory(categoryName);    
+            DOMController.load_mainContent_commonUse.all();
+            DOMController.load_navBar_categories();
+        });
+
         deleteButton.appendChild(iconContainer);
         deleteButton.appendChild(deleteText);
         
@@ -69,6 +79,31 @@ const DOM_constructors = (() => {
         taskCheckbox.type = 'checkbox';
         taskCheckbox.name = "task-completion";
         taskCheckbox.classList.add('task-completion');
+        if (task.completion)
+        {
+            taskCheckbox.checked = true;
+            TaskController.markComplete(categoryName, task);
+            taskItem.classList.add('strike');
+        }
+        else
+        {
+            taskCheckbox.checked = false;
+            TaskController.markIncomplete(categoryName, task);
+            taskItem.classList.remove('strike');
+        }
+        taskCheckbox.addEventListener('click', () => {
+            if (taskCheckbox.checked)
+            {
+                TaskController.markComplete(categoryName, task);
+                taskItem.classList.add('strike');
+            }
+            else
+            {
+                TaskController.markIncomplete(categoryName, task);
+                taskItem.classList.remove('strike');
+            }
+        });
+
 
         let taskTitle = document.createElement('div');
         taskTitle.classList.add('task-title');
@@ -82,14 +117,10 @@ const DOM_constructors = (() => {
 
         let deleteTask = document.createElement('div');
         deleteTask.classList.add("delete-task-icon-container");
-
-        taskInfo.appendChild(taskCheckbox);
-        taskInfo.appendChild(taskTitle);
-        taskInfo.appendChild(priorityCircle);
-        taskInfo.appendChild(editTask);
-        taskInfo.appendChild(deleteTask);
-
-        taskItem.appendChild(taskInfo);
+        deleteTask.addEventListener('click', () => {
+            TaskController.deleteTask(categoryName,task);
+            taskItem.remove();
+        });
 
         let taskInfoTwo = document.createElement('div');
         taskInfoTwo.classList.add('task-info-two');
@@ -101,6 +132,14 @@ const DOM_constructors = (() => {
         let taskCategory = document.createElement('div');
         taskCategory.classList.add("task-category-indicator");
         taskCategory.innerText = `# ${categoryName}`;
+
+        taskInfo.appendChild(taskCheckbox);
+        taskInfo.appendChild(taskTitle);
+        taskInfo.appendChild(priorityCircle);
+        taskInfo.appendChild(editTask);
+        taskInfo.appendChild(deleteTask);
+
+        taskItem.appendChild(taskInfo);
 
         taskInfoTwo.appendChild(deadline);
         taskInfoTwo.appendChild(taskCategory);

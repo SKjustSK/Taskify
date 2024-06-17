@@ -24,6 +24,17 @@ class Category {
     {
         this.tasks = this.tasks.filter(task => !task.isEqual(oldTask));
     }
+
+    getTask (someTask)
+    {
+        for (let task of this.tasks)
+        {
+            if (task.isEqual(someTask))
+            {
+                return task;
+            }
+        }
+    }
 }
 
 export default Category;

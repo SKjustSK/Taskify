@@ -14,8 +14,7 @@ class Task {
         return this.title === otherTask.title &&
                this.desc === otherTask.desc &&
                this.deadline.getTime() == otherTask.deadline.getTime() &&
-               this.priority === otherTask.priority &&
-               this.completion === otherTask.completion;
+               this.priority === otherTask.priority;
     }
 
     markComplete()
