@@ -11,14 +11,8 @@ import { getCAT, updateCAT } from './modules/localStorage.js';
 
 CategoryController.initialize_default_category();
 
-// addDummyTasks();
-
 DOMController.load_navBar_categories();
-DOMController.load_mainContent_commonUse.pastDue();
-DOMController.load_mainContent_commonUse.completed();
 DOMController.load_mainContent_commonUse.all();
-
-// DOMController.load_mainContent_category("Fitness");
 
 console.log(getCAT());
 
@@ -40,4 +34,14 @@ function addDummyTasks () {
     CategoryController.insertCategory("Fitness");
     TaskController.insertTask("Fitness", task2);
     TaskController.insertTask("Fitness", task5);
+
+    DOMController.load_mainContent_commonUse.all();
 }
+
+// Test purposes
+let footer = document.querySelector('.footer');
+let addDummyTasksButton = document.createElement('button');
+addDummyTasksButton.setAttribute('style', 'background-color: white; border: solid 3px red');
+addDummyTasksButton.innerText = "Add Dummy Tasks";
+addDummyTasksButton.addEventListener('click', addDummyTasks);
+footer.appendChild(addDummyTasksButton);
