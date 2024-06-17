@@ -1,5 +1,6 @@
 import { isSameWeek , isSameDay, isAfter , isBefore } from "date-fns";
 import { getCAT } from "../modules/localStorage";
+import CategoryController from "./categoryController";
 import DOM_constructors from "../modules/DOM_constructors";
 
 const DEFAULT = "General";
@@ -23,8 +24,7 @@ function sortDatesAsc (a, b) {
 } 
 
 const DOMController = (() => {
-
-    // Imported //
+    
     // loads all category buttons under the 'My Category' section
     const load_navBar_categories = () => {
         clear_navbar_categories();
@@ -37,7 +37,6 @@ const DOMController = (() => {
             categoriesWrapper.appendChild(button);
         }
     };
-
     // loads title and tasks of a given category
     const load_mainContent_category = (categoryName) => {
         let categories = getCAT();
@@ -51,32 +50,38 @@ const DOMController = (() => {
         load_category_tasks(categoryName);
     };
 
-    // To create more commonUse items like All, Today, This Week, etc, use the below format
-    const load_mainContent_commonUse = (() => {
-
-        const all = () => {
-            const taskFilter_all = (task) => {
+    // loads common use buttons like "All", "Today", etc.
+    // To add more, make sure to add the (commonUseName) in load_navBar_commonUse and (commonUseName, task filter function) in load_mainContent_commonUse 
+    const load_navBar_commonUse = () => {
+        clear_navbar_commonUseItems();
+        const commonUseItemNames = [
+            "All", "Today", "This Week", "Past Due", "Completed"
+        ];
+        const commonUseContainer = document.querySelector('.common-use-container');
+        for (let commonUseItemName of commonUseItemNames)
+        {
+            let button = DOM_constructors.navbar_commonUseItem(commonUseItemName);
+            commonUseContainer.appendChild(button);
+        }
+    };
+    // loads title and tasks of a common use section
+    const load_mainContent_commonUse = (commonUseName) => {
+        const commonUseObject = {
+            // "commonUseName": taskFilter function
+            "All": (task) => {
                 let today = new Date();
                 return (
                     isAfter(task.task.deadline, today) || 
                     isSameDay(task.task.deadline, today)
                 );
-            };
-            load_commonUse_template("All", taskFilter_all);
-        };
-    
-        const today = () => {
-            const taskFilter_today = (task) => {
+            },
+            "Today": (task) => {
                 let today = new Date();
                 return (
                     isSameDay(today, task.task.deadline)
                 );
-            };
-            load_commonUse_template("Today", taskFilter_today);
-        }
-
-        const thisWeek = () => {
-            const taskFilter_thisWeek = (task) => {
+            },
+            "This Week": (task) => {
                 let today = new Date();
                 return (
                     isSameWeek(today, task.task.deadline) && 
@@ -85,29 +90,20 @@ const DOMController = (() => {
                             isSameDay(task.task.deadline, today) 
                         )
                 );
-            }
-            load_commonUse_template("This Week", taskFilter_thisWeek);
-        };
-
-        const pastDue = () => {
-            const taskFilter_pastDue = (task) => {
+            },
+            "Past Due": (task) => {
                 let today = new Date();
                 return (
                     isBefore(task.task.deadline, today) && 
                     !isSameDay(task.task.deadline, today) &&
                     task.task.completion == false
                 );
-            }
-            load_commonUse_template("Past Due", taskFilter_pastDue);
-        }
-
-        const completed = () => {
-            const taskFilter_completed = (task) => {
+            },
+            "Completed": (task) => {
                 return task.task.completion == true;
-            }
-            load_commonUse_template("Completed", taskFilter_completed);
-        }
-        
+            },
+        };
+
         const load_commonUse_template = (commonUseName, taskFilter) => {
             clear_mainContent();
             // title
@@ -145,28 +141,43 @@ const DOMController = (() => {
             }
         }
 
-        return {
-            all,
-            today,
-            thisWeek,
-            pastDue,
-            completed,
-        };
-    })();
+        load_commonUse_template(commonUseName, commonUseObject[commonUseName]);
+    };
 
+    const load_navBar = () => {
+        clear_navBar();
+        load_navBar_commonUse();
+        load_navBar_categories();
+    }
     const clear_mainContent = () => {
         let titleContainer = document.querySelector('.title-container');
         let tasksContainer = document.querySelector('.tasks-container');
         titleContainer.innerHTML = "";
         tasksContainer.innerHTML = "";
-    }   
-
+    } 
+    const clear_navBar = () => {
+        clear_navbar_categories();
+        clear_navbar_commonUseItems();
+    }
+    const refresh = () => {
+        CategoryController.initialize_default_category();
+        load_navBar();
+        load_mainContent_commonUse("All");
+    };
     // Not imported //
     const clear_navbar_categories = () => {
         let categories = document.querySelectorAll('.category-item');
         for (let category of categories)
         {
             category.remove();
+        }
+    };
+
+    const clear_navbar_commonUseItems = () => {
+        let commonUseItems = document.querySelectorAll('.common-use-item');
+        for (let commonUseItem of commonUseItems)
+        {
+            commonUseItem.remove();
         }
     }
 
@@ -208,12 +219,15 @@ const DOMController = (() => {
         }
     }
 
-    
     return {
         load_navBar_categories,
+        load_navBar_commonUse,
         load_mainContent_category,
         load_mainContent_commonUse,
+        load_navBar,
         clear_mainContent,
+        clear_navBar,
+        refresh,
     };
 })();
 

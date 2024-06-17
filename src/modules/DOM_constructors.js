@@ -1,12 +1,24 @@
 // Contains all elements that are to be created
+
 import { format } from 'date-fns';
 import CategoryController from '../controllers/categoryController.js';
 import TaskController from '../controllers/taskController.js';
 import DOMController from '../controllers/DOMController.js';
 
-import {getCAT} from '../modules/localStorage.js';
-
 const DOM_constructors = (() => {
+
+    const navbar_commonUseItem = (commonUseName) => {
+        // <button class="common-use-item">
+        //     All
+        // </button>
+        let commonUseItem = document.createElement('button');
+        commonUseItem.classList.add('common-use-item');
+        commonUseItem.innerText = commonUseName;
+        commonUseItem.addEventListener('click', () => {
+            DOMController.load_mainContent_commonUse(commonUseName);
+        });
+        return commonUseItem; 
+    };
 
     const navbar_categoryItem = (categoryName) => {
             // <button class="category-item general">
@@ -47,7 +59,7 @@ const DOM_constructors = (() => {
 
         deleteButton.addEventListener('click', () => {
             CategoryController.deleteCategory(categoryName);    
-            DOMController.load_mainContent_commonUse.all();
+            DOMController.load_mainContent_commonUse("All");
             DOMController.load_navBar_categories();
         });
 
@@ -153,6 +165,7 @@ const DOM_constructors = (() => {
     }
 
     return {
+        navbar_commonUseItem,
         navbar_categoryItem,
         mainContent_title,
         deleteCategory_button,

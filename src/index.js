@@ -9,12 +9,7 @@ import DOMController from './controllers/DOMController.js';
 
 import { getCAT, updateCAT } from './modules/localStorage.js';
 
-CategoryController.initialize_default_category();
-
-DOMController.load_navBar_categories();
-DOMController.load_mainContent_commonUse.all();
-
-console.log(getCAT());
+DOMController.refresh();
 
 function addDummyTasks () {
     let task1 = new Task("Milk Cows", "idk", new Date("2024-6-29"), "medium", false);
@@ -34,8 +29,6 @@ function addDummyTasks () {
     CategoryController.insertCategory("Fitness");
     TaskController.insertTask("Fitness", task2);
     TaskController.insertTask("Fitness", task5);
-
-    DOMController.load_mainContent_commonUse.all();
 }
 
 // Test purposes
@@ -43,5 +36,19 @@ let footer = document.querySelector('.footer');
 let addDummyTasksButton = document.createElement('button');
 addDummyTasksButton.setAttribute('style', 'background-color: white; border: solid 3px red');
 addDummyTasksButton.innerText = "Add Dummy Tasks";
-addDummyTasksButton.addEventListener('click', addDummyTasks);
+addDummyTasksButton.addEventListener('click', () => {
+    addDummyTasks();
+    DOMController.refresh();
+    console.log(getCAT());
+});
 footer.appendChild(addDummyTasksButton);
+
+let clearAll = document.createElement('button');
+clearAll.setAttribute('style', 'background-color: white; border: solid 3px red');
+clearAll.innerText = "Clear all Catgories and Tasks";
+clearAll.addEventListener('click', () => {
+    localStorage.clear();
+    DOMController.refresh();
+    console.log(getCAT());
+});
+footer.appendChild(clearAll);
