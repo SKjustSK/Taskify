@@ -19,6 +19,23 @@ const DOM_constructors = (() => {
     return commonUseItem;
   };
 
+  const navbar_categoryHeader = () => {
+    const categoriesHeader = document.createDocumentFragment();
+
+    let categoriesTitle = document.createElement("div");
+    categoriesTitle.classList.add("categories-title");
+    categoriesTitle.innerText = "My Categories";
+
+    let addCategoryButton = document.createElement("div");
+    addCategoryButton.classList.add("add-category");
+    addCategoryButton.innerText = "&#43;";
+
+    categoriesHeader.appendChild(categoriesTitle);
+    categoriesHeader.appendChild(addCategoryButton);
+    
+    return categoriesHeader;
+  };
+
   const navbar_categoryItem = (categoryName) => {
     // <button class="category-item general">
     //     # Fitness
@@ -158,6 +175,7 @@ const DOM_constructors = (() => {
 
   return {
     navbar_commonUseItem,
+    navbar_categoryHeader,
     navbar_categoryItem,
     mainContent_title,
     deleteCategory_button,
