@@ -80,15 +80,19 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: calc(0.5*var(--nav-bar-text-padding));
+  padding: calc(0.5 * var(--nav-bar-text-padding));
   cursor: pointer;
   transition: var(--transition-time);
   border-radius: 5px;
-
+  position: relative;
 }
 
-.add-category-icon {
-  background-image: url('./images/plus-icon.svg');
+.add-category-container:hover {
+  background-color: var(--darker-hover-color);
+}
+
+.add-category-container .add-category-icon {
+  background-image: url("./images/plus-icon.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -96,9 +100,62 @@ body {
   width: 1em;
 }
 
-.add-category-container:hover {
-  background-color: var(--darker-hover-color);
-  transform: scale(1.1);
+.add-category-dropdown {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nav-bar-text-padding);
+  padding: var(--side-bar-padding);
+  border-radius: 5px;
+  height: 6.4em;
+  width: 15em;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12);
+
+  background-color: var(--main-content-color);
+}
+
+.new-category-label {
+  font-size: 0.8em;
+  color: black;
+}
+
+.new-category-text {
+  flex: 1;
+  font-family: var(--font), Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  border: 2px solid black;
+  outline: none;
+  border-radius: 2px;
+  background-color: #dedede;
+  padding-left: 0.5em;
+}
+.new-category-text:focus {
+  background-color: var(--main-content-color);
+}
+
+.add-new-category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font), Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+  border-bottom: 3px solid #1c5b4a;
+  border-radius: 2px;
+  height: 1.8em;
+  color: var(--main-content-color);
+  background-color: var(--main-content-primary);
+  transition: var(--transition-time);
+}
+.add-new-category:hover {
+  border-color: black;
+}
+.add-new-category:focus {
+  transform: scale(0.98);
+}
+.invisible {
+  display: none;
 }
 /**/
 

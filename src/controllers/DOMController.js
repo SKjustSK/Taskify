@@ -30,8 +30,14 @@ const DOMController = (() => {
   // loads all category buttons under the 'My Category' section
   const load_navBar_categories = () => {
     clear_navbar_categories();
+    
+    // Header + Add Category button
+    const categoriesHeader = document.querySelector(".categories-header");
+    let categoriesHeaderItems = DOM_constructors.navbar_categoryHeader();
+    categoriesHeader.appendChild(categoriesHeaderItems);
+    
+    // Category tabs/menus
     const categoriesWrapper = document.querySelector(".categories-wrapper");
-
     const categories = getCAT();
     for (let key in categories) {
       let button = DOM_constructors.navbar_categoryItem(key);
@@ -58,7 +64,7 @@ const DOMController = (() => {
       "All",
       "Today",
       "This Week",
-      "Past Due",
+      "Overdue",
       "Completed",
     ];
     const commonUseContainer = document.querySelector(".common-use-container");
@@ -90,7 +96,7 @@ const DOMController = (() => {
             isSameDay(task.task.deadline, today))
         );
       },
-      "Past Due": (task) => {
+      "Overdue": (task) => {
         let today = new Date();
         return (
           isBefore(task.task.deadline, today) &&
@@ -161,6 +167,9 @@ const DOMController = (() => {
   };
   // Not imported //
   const clear_navbar_categories = () => {
+    let navbar_categoryHeader = document.querySelector(".categories-header");
+    navbar_categoryHeader.innerHTML = "";
+    
     let categories = document.querySelectorAll(".category-item");
     for (let category of categories) {
       category.remove();

@@ -20,20 +20,110 @@ const DOM_constructors = (() => {
   };
 
   const navbar_categoryHeader = () => {
+
+    //   <div class="categories-title">My Categories</div>
+    //   <div class="add-category-container">
+    //     <div class="add-category-icon"></div>
+    //     <div class="add-category-dropdown invisible">
+    //       <label for="new-category-text" class="new-category-label">Category Name</label>
+    //       <input
+    //         type="text"
+    //         name="new-category-text"
+    //         class="new-category-text"
+    //         placeholder="Eg. Fitness"
+    //       />
+    //       <button class="add-new-category">Add</button>
+    //     </div>
+    //   </div>
+
     const categoriesHeader = document.createDocumentFragment();
 
     let categoriesTitle = document.createElement("div");
     categoriesTitle.classList.add("categories-title");
     categoriesTitle.innerText = "My Categories";
 
-    let addCategoryButton = document.createElement("div");
-    addCategoryButton.classList.add("add-category");
-    addCategoryButton.innerText = "&#43;";
+    let addCategoryContainer = addCategoryButton();
 
     categoriesHeader.appendChild(categoriesTitle);
-    categoriesHeader.appendChild(addCategoryButton);
-    
+    categoriesHeader.appendChild(addCategoryContainer);
+
     return categoriesHeader;
+  };
+
+  const addCategoryButton = () => {
+    // <div class="add-category-container">
+    //   <div class="add-category-icon"></div>
+
+    //   <div class="add-category-dropdown invisible">
+    //     <label for="new-category-text" class="new-category-label">Category Name</label>
+    //     <input
+    //       type="text"
+    //       name="new-category-text"
+    //       class="new-category-text"
+    //       placeholder="Eg. Fitness"
+    //     />
+    //     <button class="add-new-category">Add</button>
+    //   </div>
+    // </div>
+
+    let addCategoryContainer = document.createElement("form");
+    addCategoryContainer.classList.add("add-category-container");
+
+    let addCategoryIcon = document.createElement("div");
+    addCategoryIcon.classList.add("add-category-icon");
+
+    let dropdown = document.createElement("div");
+    dropdown.classList.add("add-category-dropdown", "invisible");
+
+    let label = document.createElement("label");
+    label.htmlFor = "new-category-text";
+    label.classList.add("new-category-label");
+    label.innerText = "Category Name";
+
+    let input = document.createElement("input");
+    input.type = "text";
+    input.name = "new-category-text";
+    input.classList.add("new-category-text");
+    input.placeholder = "Eg. Fitness";
+
+    let button = document.createElement("button");
+    button.classList.add("add-new-category");
+    button.innerText = "Add";
+
+    dropdown.appendChild(label);
+    dropdown.appendChild(input);
+    dropdown.appendChild(button);
+    addCategoryContainer.appendChild(addCategoryIcon);
+    addCategoryContainer.appendChild(dropdown);
+
+    // Dropdwon logic
+    addCategoryContainer.addEventListener("click", (event) => {
+      dropdown.classList.remove("invisible");
+      event.stopPropagation();
+    });
+
+    // handles outside clicks
+    document.addEventListener("click", (event) => {
+      if (dropdown && !dropdown.contains(event.target)) {
+        dropdown.classList.add("invisible");
+      }
+    });
+
+    // submiting category name
+    button.addEventListener('click', () => {
+      let categoryName = input.value;
+      CategoryController.insertCategory(categoryName);      
+      DOMController.refresh();
+    });
+    addCategoryContainer.addEventListener('submit', (event) => {
+      
+      // Prevent page reload
+      event.preventDefault();
+
+      button.click();
+    });
+
+    return addCategoryContainer;
   };
 
   const navbar_categoryItem = (categoryName) => {
@@ -42,7 +132,7 @@ const DOM_constructors = (() => {
     // </button>
 
     let button = document.createElement("button");
-    button.classList.add("category-item", categoryName);
+    button.classList.add("category-item");
     button.innerText = `# ${categoryName}`;
     button.addEventListener("click", () => {
       DOMController.load_mainContent_category(categoryName);
