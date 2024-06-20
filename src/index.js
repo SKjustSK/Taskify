@@ -30,18 +30,12 @@ function addDummyTasks() {
     "low",
     false
   );
-  let task4 = new Task(
-    "Do this today",
-    "idk",
-    new Date("2024-6-16"),
-    "high",
-    false
-  );
+  let task4 = new Task("Do this today", "idk", new Date(), "high", false);
   let task5 = new Task("Go gym", "idk", new Date("2024-6-17"), "medium", true);
   let task6 = new Task(
     "Do this today too, but later",
     "idk",
-    new Date("2024-6-16"),
+    new Date(),
     "medium",
     false
   );

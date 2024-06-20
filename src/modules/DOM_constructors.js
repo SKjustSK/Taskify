@@ -20,7 +20,6 @@ const DOM_constructors = (() => {
   };
 
   const navbar_categoryHeader = () => {
-
     //   <div class="categories-title">My Categories</div>
     //   <div class="add-category-container">
     //     <div class="add-category-icon"></div>
@@ -110,13 +109,12 @@ const DOM_constructors = (() => {
     });
 
     // submiting category name
-    button.addEventListener('click', () => {
+    button.addEventListener("click", () => {
       let categoryName = input.value;
-      CategoryController.insertCategory(categoryName);      
-      DOMController.refresh();
+      CategoryController.insertCategory(categoryName);
+      DOMController.refresh(categoryName);
     });
-    addCategoryContainer.addEventListener('submit', (event) => {
-      
+    addCategoryContainer.addEventListener("submit", (event) => {
       // Prevent page reload
       event.preventDefault();
 
@@ -173,6 +171,26 @@ const DOM_constructors = (() => {
     deleteButton.appendChild(deleteText);
 
     return deleteButton;
+  };
+
+  const addTask_button = () => {
+    // <div class="add-task-icon"></div>
+    // <div class="add-task-text">Add Task</div>
+    const addTaskContainer = document.createDocumentFragment();
+
+    let iconContainer = document.createElement("div");
+    iconContainer.classList.add("add-task-icon");
+    addTaskContainer.appendChild(iconContainer);
+
+    let textContiner = document.createElement("div");
+    textContiner.classList.add("add-task-text");
+    textContiner.innerText = "Add Task";
+    addTaskContainer.appendChild(textContiner);
+
+    // TODO: Pop up form to add tasks
+    //
+    
+    return addTaskContainer;
   };
 
   const taskItem = (categoryName, task) => {
@@ -269,6 +287,7 @@ const DOM_constructors = (() => {
     navbar_categoryItem,
     mainContent_title,
     deleteCategory_button,
+    addTask_button,
     taskItem,
   };
 })();
