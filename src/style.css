@@ -154,9 +154,6 @@ body {
 .add-new-category:focus {
   transform: scale(0.98);
 }
-.invisible {
-  display: none;
-}
 /**/
 
 /* Footer */
@@ -377,7 +374,84 @@ body {
 }
 /**/
 
-/**/
+/* Add Task Form  */
+.add-task-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.add-task-form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  padding: calc(2*var(--side-bar-padding));
+  gap: var(--nav-bar-text-padding); 
+  background-color: var(--main-content-color);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
+}
+
+.add-task-form-header {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
+.add-task-form input,
+.add-task-form select,
+.add-task-form textarea {
+  height: 2rem;
+  font-family: var(--font), Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  border: 2px solid black;
+  outline: none;
+  border-radius: 2px;
+  background-color: #dedede;
+  padding-left: 0.5em;
+  margin-bottom: 0.3rem;
+}
+.add-task-form input:focus,
+.add-task-form select:focus,
+.add-task-form textarea:focus {
+  background-color: var(--main-content-color);
+}
+
+.add-task-form textarea {
+  height: 5rem;
+  resize: none;
+  padding-top: 0.5rem;
+}
+
+.add-task-form label {
+  font-size: 1.1rem;
+  color: black;
+}
+
+.add-task-form .submit-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font), Arial, Helvetica, sans-serif;
+  font-size: 1.2rem;
+  border-bottom: 3px solid #1c5b4a;
+  border-radius: 2px;
+  height: 2.5rem;
+  margin-top: 0.7rem;
+  color: var(--main-content-color);
+  background-color: var(--main-content-primary);
+  transition: var(--transition-time);
+}
+.add-task-form .submit-task:hover {
+  border-color: black;
+}
+.add-task-form .submit-task:focus {
+  transform: scale(0.98);
+}
 
 button {
   /*to override the button styles*/
@@ -388,4 +462,8 @@ button {
   text-align: start;
   cursor: pointer;
   /**/
+}
+
+.invisible {
+  display: none;
 }

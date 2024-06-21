@@ -28,7 +28,29 @@ function sortDatesAsc(a, b) {
 
 const DOMController = (() => {
   
-  // loads all category buttons under the 'My Category' section
+  // Refreshes to given argument
+  const refresh = (tab = "All") => {
+    CategoryController.initialize_default_category();
+    load_navBar();
+    const categories = getCAT();
+    if (categories[tab])
+    {
+      load_mainContent_category(tab);
+    }
+    else
+    {
+      load_mainContent_commonUse(tab);
+    }
+  };
+
+  // Loads navbar and main content
+  const load_navBar = () => {
+    clear_navBar();
+    clear_mainContent();
+    load_navBar_commonUse();
+    load_navBar_categories();
+  };
+
   const load_navBar_categories = () => {
     clear_navbar_categories();
     
@@ -46,7 +68,6 @@ const DOMController = (() => {
     }
   };
 
-  // loads main content of the given category
   const load_mainContent_category = (categoryName) => {
     let categories = getCAT();
     if (categories[categoryName] === undefined) {
@@ -55,11 +76,10 @@ const DOMController = (() => {
     }
     clear_mainContent();
     load_mainContent_category_title(categoryName);
-    load_addTask_button();
+    load_addTask_button_form();
     load_category_tasks(categoryName);
   };
 
-  // loads common use buttons like "All", "Today", etc.
   // To add more, make sure to add the (commonUseName) in load_navBar_commonUse and (commonUseName, task filter function) in load_mainContent_commonUse
   const load_navBar_commonUse = () => {
     clear_navbar_commonUseItems();
@@ -76,7 +96,6 @@ const DOMController = (() => {
       commonUseContainer.appendChild(button);
     }
   };
-  // loads title and tasks of a common use section
   const load_mainContent_commonUse = (commonUseName) => {
     const commonUseObject = {
       // "commonUseName": taskFilter function
@@ -118,8 +137,8 @@ const DOMController = (() => {
       const titleContainer = document.querySelector(".title-container");
       let title = DOM_constructors.mainContent_title(commonUseName);
       titleContainer.appendChild(title);
-      // add task button
-      load_addTask_button();
+      // add task button and form
+      load_addTask_button_form();
       // Tasks
       const categories = getCAT();
       const tasksContainer = document.querySelector(".tasks-container");
@@ -149,61 +168,6 @@ const DOMController = (() => {
     load_commonUse_template(commonUseName, commonUseObject[commonUseName]);
   };
 
-  const load_navBar = () => {
-    clear_navBar();
-    clear_mainContent();
-    load_navBar_commonUse();
-    load_navBar_categories();
-  };
-
-  // Refreshes to given argument
-  const refresh = (tab = "All") => {
-    CategoryController.initialize_default_category();
-    load_navBar();
-    const categories = getCAT();
-    if (categories[tab])
-    {
-      load_mainContent_category(tab);
-    }
-    else
-    {
-      load_mainContent_commonUse(tab);
-    }
-  };
-
-  const clear_mainContent = () => {
-    let titleContainer = document.querySelector(".title-container");
-    let addTaskContainer = document.querySelector('.add-task-container');
-    let tasksContainer = document.querySelector(".tasks-container");
-    titleContainer.innerHTML = "";
-    addTaskContainer.innerHTML = "";
-    tasksContainer.innerHTML = "";
-  };
-
-  const clear_navBar = () => {
-    clear_navbar_categories();
-    clear_navbar_commonUseItems();
-  };
-
-  
-  // Not imported //
-  const clear_navbar_categories = () => {
-    let navbar_categoryHeader = document.querySelector(".categories-header");
-    navbar_categoryHeader.innerHTML = "";
-    
-    let categories = document.querySelectorAll(".category-item");
-    for (let category of categories) {
-      category.remove();
-    }
-  };
-  
-  const clear_navbar_commonUseItems = () => {
-    let commonUseItems = document.querySelectorAll(".common-use-item");
-    for (let commonUseItem of commonUseItems) {
-      commonUseItem.remove();
-    }
-  };
-
   const load_mainContent_category_title = (categoryName) => {
     const titleContainer = document.querySelector(".title-container");
     let mainContent_category_title =
@@ -217,10 +181,33 @@ const DOMController = (() => {
     }
   };
 
-  const load_addTask_button = () => {
+  // Assists loading of navbars and main content
+  const load_addTask_button_form = () => {
+    // Button
     const addTaskContainer = document.querySelector('.add-task-container');
-    let contents = DOM_constructors.addTask_button();
+    const contents = DOM_constructors.addTask_button();
     addTaskContainer.appendChild(contents);
+
+    // Form on clicking button
+    const addTaskFormContainer = document.querySelector('.add-task-form-container');
+    const addTaskForm = DOM_constructors.addTask_form();
+    addTaskFormContainer.appendChild(addTaskForm);
+
+    // Pop-up form to add tasks
+    // Dropdown logic
+    addTaskContainer.addEventListener("click", (event) => {
+      addTaskFormContainer.classList.remove("invisible");
+      event.stopPropagation();
+    });
+
+    // handles outside clicks
+    addTaskFormContainer.addEventListener("click", (event) => {
+      if (addTaskForm && !addTaskForm.contains(event.target)) {
+        addTaskFormContainer.classList.add("invisible");
+
+        console.log("LAND AHOY");
+      }
+    });
   };
 
   const load_category_tasks = (categoryName) => {
@@ -246,14 +233,41 @@ const DOMController = (() => {
     }
   };
 
+  const clear_mainContent = () => {
+    let titleContainer = document.querySelector(".title-container");
+    let addTaskContainer = document.querySelector('.add-task-container');
+    let tasksContainer = document.querySelector(".tasks-container");
+    titleContainer.innerHTML = "";
+    addTaskContainer.innerHTML = "";
+    tasksContainer.innerHTML = "";
+
+    let addTaskFormContainer = document.querySelector('.add-task-form-container');
+    addTaskFormContainer.innerHTML = "";
+  };
+
+  const clear_navBar = () => {
+    clear_navbar_categories();
+    clear_navbar_commonUseItems();
+  };
+  
+  const clear_navbar_categories = () => {
+    let navbar_categoryHeader = document.querySelector(".categories-header");
+    navbar_categoryHeader.innerHTML = "";
+    
+    let categories = document.querySelectorAll(".category-item");
+    for (let category of categories) {
+      category.remove();
+    }
+  };
+  
+  const clear_navbar_commonUseItems = () => {
+    let commonUseItems = document.querySelectorAll(".common-use-item");
+    for (let commonUseItem of commonUseItems) {
+      commonUseItem.remove();
+    }
+  };
+
   return {
-    load_navBar_categories,
-    load_navBar_commonUse,
-    load_mainContent_category,
-    load_mainContent_commonUse,
-    load_navBar,
-    clear_mainContent,
-    clear_navBar,
     refresh,
   };
 })();

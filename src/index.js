@@ -19,7 +19,7 @@ function addDummyTasks() {
   let task2 = new Task(
     "Go on a Walk",
     "idk",
-    new Date("2024-6-18"),
+    new Date("2024-7-18"),
     "high",
     false
   );
