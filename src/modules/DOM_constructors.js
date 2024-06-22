@@ -1,13 +1,13 @@
 // Contains all elements that are to be created
 
 import { format } from "date-fns";
+import Task from "./task.js";
 import CategoryController from "../controllers/categoryController.js";
 import TaskController from "../controllers/taskController.js";
 import DOMController from "../controllers/DOMController.js";
 import { getCAT } from "./localStorage.js";
 
 const DOM_constructors = (() => {
-
   // Navbar elements
   const navbar_commonUseItem = (commonUseName) => {
     // <button class="common-use-item">
@@ -340,12 +340,73 @@ const DOM_constructors = (() => {
     form.appendChild(categoryLabel);
     form.appendChild(categorySelect);
 
+    // Create error message container
+    const errorMessage = document.createElement("div");
+    errorMessage.classList.add("error-message");
+    form.appendChild(errorMessage);
+
     // Create submit button
     const submitButton = document.createElement("button");
     submitButton.classList.add("submit-task");
     submitButton.textContent = "Add Task";
+    submitButton.onclick = () => {
+      submitButton.setAttribute("style", "transform: scale(0.98");
+      setTimeout(() => {
+        submitButton.setAttribute("style", "transform: scale(1)");
+      }, 200);
+    };
 
     form.appendChild(submitButton);
+
+    // Task submission and creations logic
+    submitButton.addEventListener("click", (event) => {
+      const newTask = {
+        taskTitle: titleInput.value.trim(),
+        taskDesc: descTextarea.value.trim(),
+        taskDeadline: deadlineInput.value,
+        taskPriority: prioritySelect.value,
+        taskCategory: categorySelect.value,
+      };
+
+      // Form validation
+      let validationPassed = true;
+      for (let taskItem in newTask) {
+        // Task Description can be empty
+        if (taskItem === "taskDesc") {
+          console.log("empty taskdesc")
+          continue;
+        }
+        if (newTask[taskItem] === "") {
+          event.preventDefault();
+          const errorMessage = document.querySelector(
+            ".add-task-form .error-message"
+          );
+          errorMessage.textContent = "All inputs must be filled (except description)";
+          validationPassed = false;
+          break;
+        }
+      }
+
+      if (validationPassed) {
+        TaskController.insertTask(
+          newTask.taskCategory,
+          new Task(
+            newTask.taskTitle,
+            newTask.taskDesc,
+            newTask.taskDeadline,
+            newTask.taskPriority,
+            false
+          )
+        );
+        DOMController.refresh(newTask.taskCategory);
+      }
+    });
+    form.addEventListener("submit", (event) => {
+      // Prevent page reload
+      event.preventDefault();
+
+      submitButton.click();
+    });
 
     // Return the constructed form element
     return form;

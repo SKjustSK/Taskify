@@ -455,6 +455,10 @@ body {
   transform: scale(0.98);
 }
 
+.add-task-form .error-message {
+  color: var(--delete-color);
+}
+
 button {
   /*to override the button styles*/
   background: none;

@@ -245,6 +245,7 @@ const DOMController = (() => {
       ".add-task-form-container"
     );
     addTaskFormContainer.innerHTML = "";
+    addTaskFormContainer.classList.add('invisible');
   };
 
   const clear_navBar = () => {
