@@ -27,18 +27,14 @@ function sortDatesAsc(a, b) {
 }
 
 const DOMController = (() => {
-  
   // Refreshes to given argument
   const refresh = (tab = "All") => {
     CategoryController.initialize_default_category();
     load_navBar();
     const categories = getCAT();
-    if (categories[tab])
-    {
+    if (categories[tab]) {
       load_mainContent_category(tab);
-    }
-    else
-    {
+    } else {
       load_mainContent_commonUse(tab);
     }
   };
@@ -53,12 +49,12 @@ const DOMController = (() => {
 
   const load_navBar_categories = () => {
     clear_navbar_categories();
-    
+
     // Header + Add Category button
     const categoriesHeader = document.querySelector(".categories-header");
     let categoriesHeaderItems = DOM_constructors.navbar_categoryHeader();
     categoriesHeader.appendChild(categoriesHeaderItems);
-    
+
     // Category tabs/menus
     const categoriesWrapper = document.querySelector(".categories-wrapper");
     const categories = getCAT();
@@ -118,7 +114,7 @@ const DOMController = (() => {
             isSameDay(task.task.deadline, today))
         );
       },
-      "Overdue": (task) => {
+      Overdue: (task) => {
         let today = new Date();
         return (
           isBefore(task.task.deadline, today) &&
@@ -183,30 +179,34 @@ const DOMController = (() => {
 
   // Assists loading of navbars and main content
   const load_addTask_button_form = () => {
-    // Button
-    const addTaskContainer = document.querySelector('.add-task-container');
+    // Loading Button
+    const addTaskContainer = document.querySelector(".add-task-container");
     const contents = DOM_constructors.addTask_button();
     addTaskContainer.appendChild(contents);
 
-    // Form on clicking button
-    const addTaskFormContainer = document.querySelector('.add-task-form-container');
+    // Loading Form
+    const addTaskFormContainer = document.querySelector(
+      ".add-task-form-container"
+    );
     const addTaskForm = DOM_constructors.addTask_form();
     addTaskFormContainer.appendChild(addTaskForm);
 
     // Pop-up form to add tasks
-    // Dropdown logic
     addTaskContainer.addEventListener("click", (event) => {
       addTaskFormContainer.classList.remove("invisible");
       event.stopPropagation();
     });
 
     // handles outside clicks
-    addTaskFormContainer.addEventListener("click", (event) => {
+    document.addEventListener("click", (event) => {
       if (addTaskForm && !addTaskForm.contains(event.target)) {
         addTaskFormContainer.classList.add("invisible");
-
-        console.log("LAND AHOY");
       }
+    });
+    
+    // To stop form from closing if clicked inside it, as the click would propogate to addTaskFormContainer
+    addTaskForm.addEventListener("click", (event) => {
+      event.stopPropagation();
     });
   };
 
@@ -235,13 +235,15 @@ const DOMController = (() => {
 
   const clear_mainContent = () => {
     let titleContainer = document.querySelector(".title-container");
-    let addTaskContainer = document.querySelector('.add-task-container');
+    let addTaskContainer = document.querySelector(".add-task-container");
     let tasksContainer = document.querySelector(".tasks-container");
     titleContainer.innerHTML = "";
     addTaskContainer.innerHTML = "";
     tasksContainer.innerHTML = "";
 
-    let addTaskFormContainer = document.querySelector('.add-task-form-container');
+    let addTaskFormContainer = document.querySelector(
+      ".add-task-form-container"
+    );
     addTaskFormContainer.innerHTML = "";
   };
 
@@ -249,17 +251,17 @@ const DOMController = (() => {
     clear_navbar_categories();
     clear_navbar_commonUseItems();
   };
-  
+
   const clear_navbar_categories = () => {
     let navbar_categoryHeader = document.querySelector(".categories-header");
     navbar_categoryHeader.innerHTML = "";
-    
+
     let categories = document.querySelectorAll(".category-item");
     for (let category of categories) {
       category.remove();
     }
   };
-  
+
   const clear_navbar_commonUseItems = () => {
     let commonUseItems = document.querySelectorAll(".common-use-item");
     for (let commonUseItem of commonUseItems) {

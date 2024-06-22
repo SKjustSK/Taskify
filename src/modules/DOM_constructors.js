@@ -7,6 +7,8 @@ import DOMController from "../controllers/DOMController.js";
 import { getCAT } from "./localStorage.js";
 
 const DOM_constructors = (() => {
+
+  // Navbar elements
   const navbar_commonUseItem = (commonUseName) => {
     // <button class="common-use-item">
     //     All
@@ -69,7 +71,7 @@ const DOM_constructors = (() => {
 
     let addCategoryContainer = document.createElement("form");
     addCategoryContainer.classList.add("add-category-container");
-    
+
     let addCategoryIcon = document.createElement("div");
     addCategoryIcon.classList.add("add-category-icon");
     addCategoryContainer.appendChild(addCategoryIcon);
@@ -82,29 +84,29 @@ const DOM_constructors = (() => {
     label.classList.add("new-category-label");
     label.innerText = "Category Name";
     dropdown.appendChild(label);
-    
+
     let input = document.createElement("input");
     input.type = "text";
     input.name = "new-category-text";
     input.classList.add("new-category-text");
     input.placeholder = "Eg. Fitness";
     dropdown.appendChild(input);
-    
-    let errorMessage = document.createElement('div');
-    errorMessage.classList.add('error-message');
+
+    let errorMessage = document.createElement("div");
+    errorMessage.classList.add("error-message");
     dropdown.appendChild(errorMessage);
 
     let button = document.createElement("button");
     button.classList.add("add-new-category");
     button.innerText = "Add";
     button.onclick = () => {
-      button.setAttribute('style', 'transform: scale(0.98');
-      setTimeout( () => {
-        button.setAttribute('style', 'transform: scale(1)');
+      button.setAttribute("style", "transform: scale(0.98");
+      setTimeout(() => {
+        button.setAttribute("style", "transform: scale(1)");
       }, 200);
     };
     dropdown.appendChild(button);
-    
+
     addCategoryContainer.appendChild(dropdown);
 
     // Dropdwon logic
@@ -122,15 +124,15 @@ const DOM_constructors = (() => {
 
     // submiting category name
     button.addEventListener("click", (event) => {
-      let categoryName = (input.value).trim();
-      if (categoryName !== "")
-      {
+      let categoryName = input.value.trim();
+      if (categoryName !== "") {
         CategoryController.insertCategory(categoryName);
         DOMController.refresh(categoryName);
-      }
-      else {
+      } else {
         event.preventDefault();
-        const errorMessage = document.querySelector('.add-category-dropdown .error-message');
+        const errorMessage = document.querySelector(
+          ".add-category-dropdown .error-message"
+        );
         errorMessage.textContent = "Invalid input";
       }
     });
@@ -158,6 +160,7 @@ const DOM_constructors = (() => {
     return button;
   };
 
+  // Main content elements
   const mainContent_title = (categoryName) => {
     // <div class="category-title">
     //     General
@@ -207,7 +210,7 @@ const DOM_constructors = (() => {
     addTaskContainer.appendChild(textContiner);
 
     // click logic is in DOMController due to the fact that this element interacts with an element outside itself
-    
+
     return addTaskContainer;
   };
 
@@ -240,69 +243,69 @@ const DOM_constructors = (() => {
     // </form>
 
     // Create the form element
-    const form = document.createElement('form');
-    form.classList.add('add-task-form');
-    form.action = '';
+    const form = document.createElement("form");
+    form.classList.add("add-task-form");
+    form.action = "";
 
     // Create the header
-    const header = document.createElement('div');
-    header.classList.add('add-task-form-header');
-    header.textContent = 'Add Task';
+    const header = document.createElement("div");
+    header.classList.add("add-task-form-header");
+    header.textContent = "Add Task";
     form.appendChild(header);
 
     // Create title label and input
-    const titleLabel = document.createElement('label');
-    titleLabel.classList.add('new-task-title');
-    titleLabel.textContent = 'Title';
-    titleLabel.setAttribute('for', 'task-title');
+    const titleLabel = document.createElement("label");
+    titleLabel.classList.add("new-task-title");
+    titleLabel.textContent = "Title";
+    titleLabel.setAttribute("for", "task-title");
 
-    const titleInput = document.createElement('input');
-    titleInput.type = 'text';
-    titleInput.classList.add('task-title-input');
-    titleInput.placeholder = 'Eg. Go on a walk';
+    const titleInput = document.createElement("input");
+    titleInput.type = "text";
+    titleInput.classList.add("task-title-input");
+    titleInput.placeholder = "Eg. Go on a walk";
 
     form.appendChild(titleLabel);
     form.appendChild(titleInput);
 
     // Create description label and textarea
-    const descLabel = document.createElement('label');
-    descLabel.classList.add('new-task-desc');
-    descLabel.textContent = 'Description';
-    descLabel.setAttribute('for', 'task-desc');
+    const descLabel = document.createElement("label");
+    descLabel.classList.add("new-task-desc");
+    descLabel.textContent = "Description";
+    descLabel.setAttribute("for", "task-desc");
 
-    const descTextarea = document.createElement('textarea');
-    descTextarea.classList.add('task-desc-input');
-    descTextarea.placeholder = 'Eg. Walk for atleast 5km';
+    const descTextarea = document.createElement("textarea");
+    descTextarea.classList.add("task-desc-input");
+    descTextarea.placeholder = "Eg. Walk for atleast 5km";
 
     form.appendChild(descLabel);
     form.appendChild(descTextarea);
 
     // Create deadline label and input
-    const deadlineLabel = document.createElement('label');
-    deadlineLabel.classList.add('new-task-deadline');
-    deadlineLabel.textContent = 'Deadline';
-    deadlineLabel.setAttribute('for', 'task-deadline');
+    const deadlineLabel = document.createElement("label");
+    deadlineLabel.classList.add("new-task-deadline");
+    deadlineLabel.textContent = "Deadline";
+    deadlineLabel.setAttribute("for", "task-deadline");
 
-    const deadlineInput = document.createElement('input');
-    deadlineInput.type = 'date';
-    deadlineInput.classList.add('task-deadline-input');
+    const deadlineInput = document.createElement("input");
+    deadlineInput.type = "date";
+    deadlineInput.classList.add("task-deadline-input");
 
     form.appendChild(deadlineLabel);
     form.appendChild(deadlineInput);
 
     // Create priority label and select
-    const priorityLabel = document.createElement('label');
-    priorityLabel.classList.add('new-task-priority');
-    priorityLabel.textContent = 'Priority';
-    priorityLabel.setAttribute('for', 'task-priority-input');
+    const priorityLabel = document.createElement("label");
+    priorityLabel.classList.add("new-task-priority");
+    priorityLabel.textContent = "Priority";
+    priorityLabel.setAttribute("for", "task-priority-input");
 
-    const prioritySelect = document.createElement('select');
-    prioritySelect.classList.add('new-task-priority-input');
-    prioritySelect.name = 'task-priority-input';
+    const prioritySelect = document.createElement("select");
+    prioritySelect.classList.add("new-task-priority-input");
+    prioritySelect.name = "task-priority-input";
 
-    const priorities = ['Low', 'Medium', 'High'];
+    const priorities = ["Low", "Medium", "High"];
     for (const priority of priorities) {
-      const option = document.createElement('option');
+      const option = document.createElement("option");
       option.value = priority.toLowerCase();
       option.textContent = priority;
       prioritySelect.appendChild(option);
@@ -312,14 +315,14 @@ const DOM_constructors = (() => {
     form.appendChild(prioritySelect);
 
     // Create category label and select
-    const categoryLabel = document.createElement('label');
-    categoryLabel.classList.add('new-task-category');
-    categoryLabel.textContent = 'Category';
-    categoryLabel.setAttribute('for', 'task-category-input');
+    const categoryLabel = document.createElement("label");
+    categoryLabel.classList.add("new-task-category");
+    categoryLabel.textContent = "Category";
+    categoryLabel.setAttribute("for", "task-category-input");
 
-    const categorySelect = document.createElement('select');
-    categorySelect.classList.add('new-task-category-input');
-    categorySelect.name = 'task-category-input';
+    const categorySelect = document.createElement("select");
+    categorySelect.classList.add("new-task-category-input");
+    categorySelect.name = "task-category-input";
 
     // Add all category options
     const categories = getCAT();
@@ -328,7 +331,7 @@ const DOM_constructors = (() => {
       categoryOptions.push(key);
     }
     for (let category of categoryOptions) {
-      const option = document.createElement('option');
+      const option = document.createElement("option");
       option.value = category;
       option.textContent = category;
       categorySelect.appendChild(option);
@@ -338,12 +341,12 @@ const DOM_constructors = (() => {
     form.appendChild(categorySelect);
 
     // Create submit button
-    const submitButton = document.createElement('button');
-    submitButton.classList.add('submit-task');
-    submitButton.textContent = 'Add Task';
+    const submitButton = document.createElement("button");
+    submitButton.classList.add("submit-task");
+    submitButton.textContent = "Add Task";
 
     form.appendChild(submitButton);
-    
+
     // Return the constructed form element
     return form;
   };
@@ -436,8 +439,6 @@ const DOM_constructors = (() => {
     return taskItem;
   };
 
-  
-  
   return {
     navbar_commonUseItem,
     navbar_categoryHeader,
