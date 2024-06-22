@@ -109,7 +109,7 @@ body {
   gap: var(--nav-bar-text-padding);
   padding: var(--side-bar-padding);
   border-radius: 5px;
-  height: 6.4em;
+  /* height: 7rem; */
   width: 15em;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12);
 
@@ -129,7 +129,7 @@ body {
   outline: none;
   border-radius: 2px;
   background-color: #dedede;
-  padding-left: 0.5em;
+  padding: 0.5em 0.5em;
 }
 .new-category-text:focus {
   background-color: var(--main-content-color);
@@ -151,8 +151,10 @@ body {
 .add-new-category:hover {
   border-color: black;
 }
-.add-new-category:focus {
-  transform: scale(0.98);
+
+.add-category-container .error-message {
+  color: var(--delete-color);
+  font-size: 0.8rem;
 }
 /**/
 

@@ -62,15 +62,17 @@ const DOM_constructors = (() => {
     //       class="new-category-text"
     //       placeholder="Eg. Fitness"
     //     />
+    //      <div class="error-message"></div>
     //     <button class="add-new-category">Add</button>
     //   </div>
     // </div>
 
     let addCategoryContainer = document.createElement("form");
     addCategoryContainer.classList.add("add-category-container");
-
+    
     let addCategoryIcon = document.createElement("div");
     addCategoryIcon.classList.add("add-category-icon");
+    addCategoryContainer.appendChild(addCategoryIcon);
 
     let dropdown = document.createElement("div");
     dropdown.classList.add("add-category-dropdown", "invisible");
@@ -79,22 +81,30 @@ const DOM_constructors = (() => {
     label.htmlFor = "new-category-text";
     label.classList.add("new-category-label");
     label.innerText = "Category Name";
-
+    dropdown.appendChild(label);
+    
     let input = document.createElement("input");
     input.type = "text";
     input.name = "new-category-text";
     input.classList.add("new-category-text");
     input.placeholder = "Eg. Fitness";
-    input.setAttribute("required", "true");
+    dropdown.appendChild(input);
+    
+    let errorMessage = document.createElement('div');
+    errorMessage.classList.add('error-message');
+    dropdown.appendChild(errorMessage);
 
     let button = document.createElement("button");
     button.classList.add("add-new-category");
     button.innerText = "Add";
-
-    dropdown.appendChild(label);
-    dropdown.appendChild(input);
+    button.onclick = () => {
+      button.setAttribute('style', 'transform: scale(0.98');
+      setTimeout( () => {
+        button.setAttribute('style', 'transform: scale(1)');
+      }, 200);
+    };
     dropdown.appendChild(button);
-    addCategoryContainer.appendChild(addCategoryIcon);
+    
     addCategoryContainer.appendChild(dropdown);
 
     // Dropdwon logic
@@ -111,10 +121,18 @@ const DOM_constructors = (() => {
     });
 
     // submiting category name
-    button.addEventListener("click", () => {
-      let categoryName = input.value;
-      CategoryController.insertCategory(categoryName);
-      DOMController.refresh(categoryName);
+    button.addEventListener("click", (event) => {
+      let categoryName = (input.value).trim();
+      if (categoryName !== "")
+      {
+        CategoryController.insertCategory(categoryName);
+        DOMController.refresh(categoryName);
+      }
+      else {
+        event.preventDefault();
+        const errorMessage = document.querySelector('.add-category-dropdown .error-message');
+        errorMessage.textContent = "Invalid input";
+      }
     });
     addCategoryContainer.addEventListener("submit", (event) => {
       // Prevent page reload
