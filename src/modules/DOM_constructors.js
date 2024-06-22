@@ -1,6 +1,6 @@
 // Contains all elements that are to be created
 
-import { format } from "date-fns";
+import { format, isBefore, isSameDay } from "date-fns";
 import Task from "./task.js";
 import CategoryController from "../controllers/categoryController.js";
 import TaskController from "../controllers/taskController.js";
@@ -479,6 +479,11 @@ const DOM_constructors = (() => {
     let deadline = document.createElement("div");
     deadline.classList.add("deadline");
     deadline.innerText = format(task.deadline, "d MMM, EEEE, yyyy");
+    let today = new Date();
+    if (isBefore(task.deadline, today) && !isSameDay(task.deadline, today)) {
+      // Match the color with the variable 'delete-color' in variables.css 
+      deadline.setAttribute("style", "color: #f44336");
+    }
 
     let taskCategory = document.createElement("div");
     taskCategory.classList.add("task-category-indicator");

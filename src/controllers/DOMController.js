@@ -92,15 +92,12 @@ const DOMController = (() => {
       commonUseContainer.appendChild(button);
     }
   };
+
   const load_mainContent_commonUse = (commonUseName) => {
     const commonUseObject = {
       // "commonUseName": taskFilter function
-      All: (task) => {
-        let today = new Date();
-        return (
-          isAfter(task.task.deadline, today) ||
-          isSameDay(task.task.deadline, today)
-        );
+      All: () => {
+        return true;
       },
       Today: (task) => {
         let today = new Date();
@@ -163,7 +160,8 @@ const DOMController = (() => {
 
     load_commonUse_template(commonUseName, commonUseObject[commonUseName]);
   };
-
+  
+  // Assists loading of navbars and main content
   const load_mainContent_category_title = (categoryName) => {
     const titleContainer = document.querySelector(".title-container");
     let mainContent_category_title =
@@ -177,7 +175,6 @@ const DOMController = (() => {
     }
   };
 
-  // Assists loading of navbars and main content
   const load_addTask_button_form = () => {
     // Loading Button
     const addTaskContainer = document.querySelector(".add-task-container");
@@ -203,7 +200,7 @@ const DOMController = (() => {
         addTaskFormContainer.classList.add("invisible");
       }
     });
-    
+
     // To stop form from closing if clicked inside it, as the click would propogate to addTaskFormContainer
     addTaskForm.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -217,17 +214,9 @@ const DOMController = (() => {
     const category = categories[categoryName];
     let tasks = category.tasks;
 
-    // remove old tasks
-    let required_tasks = [];
-    let today = new Date();
-    for (let task of tasks) {
-      if (isAfter(task.deadline, today) || isSameDay(task.deadline, today)) {
-        required_tasks.push(task);
-      }
-    }
-    required_tasks.sort(sortDatesAsc);
+    tasks.sort(sortDatesAsc);
 
-    for (let task of required_tasks) {
+    for (let task of tasks) {
       let taskItem = DOM_constructors.taskItem(categoryName, task);
       tasksContainer.appendChild(taskItem);
     }
@@ -245,7 +234,7 @@ const DOMController = (() => {
       ".add-task-form-container"
     );
     addTaskFormContainer.innerHTML = "";
-    addTaskFormContainer.classList.add('invisible');
+    addTaskFormContainer.classList.add("invisible");
   };
 
   const clear_navBar = () => {
