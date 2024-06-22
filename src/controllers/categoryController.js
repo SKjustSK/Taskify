@@ -20,8 +20,6 @@ const CategoryController = (() => {
     if (categories[categoryName] === undefined) {
       categories[categoryName] = new Category(categoryName);
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' already exists.`);
     }
   };
 
@@ -30,8 +28,6 @@ const CategoryController = (() => {
     if (categories[categoryName] !== undefined) {
       delete categories[categoryName];
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' does not exist.`);
     }
   };
 

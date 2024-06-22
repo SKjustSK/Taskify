@@ -67,7 +67,6 @@ const DOMController = (() => {
   const load_mainContent_category = (categoryName) => {
     let categories = getCAT();
     if (categories[categoryName] === undefined) {
-      console.log(`Category ${categoryName} does not exist.`);
       return;
     }
     clear_mainContent();
@@ -160,7 +159,7 @@ const DOMController = (() => {
 
     load_commonUse_template(commonUseName, commonUseObject[commonUseName]);
   };
-  
+
   // Assists loading of navbars and main content
   const load_mainContent_category_title = (categoryName) => {
     const titleContainer = document.querySelector(".title-container");
@@ -259,6 +258,7 @@ const DOMController = (() => {
     }
   };
 
+  // Funnily enough, I did not plan on creating this module just to export one function. But hey that's the only thing I actually used in the end.
   return {
     refresh,
   };

@@ -12,7 +12,33 @@ body {
   box-sizing: border-box;
 }
 
-/* Side bar + Nav bar*/
+/* Footer */
+.footer {
+  grid-column: 1 / 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0.9em;
+  background-color: var(--footer-color);
+  color: var(--nav-bar-text-color);
+  gap: 0.19em;
+  a {
+    color: var(--nav-bar-text-color);
+  }
+}
+/**/
+
+/* Brand Name */
+.side-bar .brand-name {
+  display: flex;
+  align-items: center;
+  font-size: 4em;
+  height: 70px;
+  color: var(--brand-name-color);
+}
+
+/* Navbar  */
 .side-bar {
   display: flex;
   flex-direction: column;
@@ -23,20 +49,13 @@ body {
   color: var(--nav-bar-text-color);
 }
 
-.brand-name {
-  display: flex;
-  align-items: center;
-  font-size: 4em;
-  height: 70px;
-  color: var(--brand-name-color);
-}
-
-.nav-bar {
+.side-bar .nav-bar {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
+/* Common Use Items + Category Items*/
 .common-use-container {
   display: flex;
   flex-direction: column;
@@ -56,6 +75,7 @@ body {
   background-color: var(--hover-color);
 }
 
+/* Categories */
 .categories-wrapper {
   display: flex;
   flex-direction: column;
@@ -76,6 +96,7 @@ body {
   color: var(--category-title-color);
 }
 
+/* Add new category button */
 .add-category-container {
   display: flex;
   justify-content: center;
@@ -100,6 +121,7 @@ body {
   width: 1em;
 }
 
+/* Add new category form  */
 .add-category-dropdown {
   position: absolute;
   top: calc(100% + 3px);
@@ -158,23 +180,6 @@ body {
 }
 /**/
 
-/* Footer */
-.footer {
-  grid-column: 1 / 3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  font-size: 0.9em;
-  background-color: var(--footer-color);
-  color: var(--nav-bar-text-color);
-  gap: 0.19em;
-  a {
-    color: var(--nav-bar-text-color);
-  }
-}
-/**/
-
 /* Main content */
 .main-content-container {
   display: flex;
@@ -228,7 +233,7 @@ body {
   height: 1em;
   width: 1em;
 
-  /*same color as color of delete category tex*/
+  /*same color as color of delete category text*/
   filter: invert(46%) sepia(26%) saturate(7458%) hue-rotate(336deg)
     brightness(92%) contrast(108%);
 }
@@ -267,7 +272,8 @@ body {
     color: var(--main-content-primary);
   }
   .add-task-icon {
-    filter: invert(48%) sepia(81%) saturate(321%) hue-rotate(114deg) brightness(99%) contrast(91%);
+    filter: invert(48%) sepia(81%) saturate(321%) hue-rotate(114deg)
+      brightness(99%) contrast(91%);
   }
 }
 /**/
@@ -391,8 +397,8 @@ body {
   display: flex;
   flex-direction: column;
   width: 350px;
-  padding: calc(2*var(--side-bar-padding));
-  gap: var(--nav-bar-text-padding); 
+  padding: calc(2 * var(--side-bar-padding));
+  gap: var(--nav-bar-text-padding);
   background-color: var(--main-content-color);
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.12);
   border-radius: 5px;
@@ -459,6 +465,7 @@ body {
   color: var(--delete-color);
 }
 
+/**/
 button {
   /*to override the button styles*/
   background: none;

@@ -373,7 +373,7 @@ const DOM_constructors = (() => {
       for (let taskItem in newTask) {
         // Task Description can be empty
         if (taskItem === "taskDesc") {
-          console.log("empty taskdesc")
+          console.log("empty taskdesc");
           continue;
         }
         if (newTask[taskItem] === "") {
@@ -381,7 +381,8 @@ const DOM_constructors = (() => {
           const errorMessage = document.querySelector(
             ".add-task-form .error-message"
           );
-          errorMessage.textContent = "All inputs must be filled (except description)";
+          errorMessage.textContent =
+            "All inputs must be filled (except description)";
           validationPassed = false;
           break;
         }
@@ -481,7 +482,7 @@ const DOM_constructors = (() => {
     deadline.innerText = format(task.deadline, "d MMM, EEEE, yyyy");
     let today = new Date();
     if (isBefore(task.deadline, today) && !isSameDay(task.deadline, today)) {
-      // Match the color with the variable 'delete-color' in variables.css 
+      // Match the color with the variable 'delete-color' in variables.css
       deadline.setAttribute("style", "color: #f44336");
     }
 

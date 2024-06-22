@@ -7,8 +7,6 @@ const TaskController = (() => {
     if (category !== undefined) {
       category.addTask(task);
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' does not exist.`);
     }
   };
 
@@ -18,8 +16,6 @@ const TaskController = (() => {
     if (category !== undefined) {
       category.removeTask(task);
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' does not exist.`);
     }
   };
 
@@ -30,8 +26,6 @@ const TaskController = (() => {
       let actualTask = category.getTask(task);
       actualTask.markComplete();
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' does not exist.`);
     }
   };
   const markIncomplete = (categoryName, task) => {
@@ -41,8 +35,6 @@ const TaskController = (() => {
       let actualTask = category.getTask(task);
       actualTask.markIncomplete();
       updateCAT(categories);
-    } else {
-      console.log(`Category '${categoryName}' does not exist.`);
     }
   };
 
